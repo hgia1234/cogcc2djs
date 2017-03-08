@@ -46,7 +46,17 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	data["jsList"] = jsFilePaths
+
+	// get the order out first
+	jsOrderList := GetStringSliceAtPath(data, "jsListOrder")
+
+	for _, otherFilePath := range jsFilePaths {
+		if !ContainsByString(jsOrderList, otherFilePath) {
+			jsOrderList = append(jsOrderList, otherFilePath)
+		}
+	}
+
+	data["jsList"] = jsOrderList
 	newProjectJsonFileContent, err := json.MarshalIndent(data, "", "\t")
 	if err != nil {
 		panic(err)

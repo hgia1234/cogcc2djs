@@ -34,6 +34,11 @@ func main() {
 	jsFilePaths := walkAndGetFilePath(jsFiles, "src", isValidJsFile)
 	resFiles, _ := ioutil.ReadDir("./res/")
 	pngFilePaths := walkAndGetFilePath(resFiles, "res", isValidPngFile)
+	jpgFilePaths := walkAndGetFilePath(resFiles, "res", isValidJpgFile)
+	jpegFilePaths := walkAndGetFilePath(resFiles, "res", isValidJpegFile)
+	mp3FilePaths := walkAndGetFilePath(resFiles, "res", isValidMp3File)
+	plistFilePaths := walkAndGetFilePath(resFiles, "res", isValidPlistFile)
+	cafFilePaths := walkAndGetFilePath(resFiles, "res", isValidCafFile)
 	fontFilePaths := walkAndGetFilePath(resFiles, "res", isValidFontFile)
 
 	// project json
@@ -71,7 +76,37 @@ func main() {
 	coreContent := ""
 	for _, filePath := range pngFilePaths {
 		index := strings.LastIndex(filePath, "/")
-		name := filePath[index+1 : len(filePath)-4] // cut .png
+		name := filePath[index+1 : len(filePath)-4]
+		coreContent = fmt.Sprintf("%s\t%s : \"%s\",\n", coreContent, name, filePath)
+	}
+
+	for _, filePath := range jpgFilePaths {
+		index := strings.LastIndex(filePath, "/")
+		name := filePath[index+1 : len(filePath)-4]
+		coreContent = fmt.Sprintf("%s\t%s : \"%s\",\n", coreContent, name, filePath)
+	}
+
+	for _, filePath := range jpegFilePaths {
+		index := strings.LastIndex(filePath, "/")
+		name := filePath[index+1 : len(filePath)-5]
+		coreContent = fmt.Sprintf("%s\t%s : \"%s\",\n", coreContent, name, filePath)
+	}
+
+	for _, filePath := range mp3FilePaths {
+		index := strings.LastIndex(filePath, "/")
+		name := filePath[index+1 : len(filePath)-4]
+		coreContent = fmt.Sprintf("%s\t%s : \"%s\",\n", coreContent, name, filePath)
+	}
+
+	for _, filePath := range cafFilePaths {
+		index := strings.LastIndex(filePath, "/")
+		name := filePath[index+1 : len(filePath)-4]
+		coreContent = fmt.Sprintf("%s\t%s : \"%s\",\n", coreContent, name, filePath)
+	}
+
+	for _, filePath := range plistFilePaths {
+		index := strings.LastIndex(filePath, "/")
+		name := filePath[index+1 : len(filePath)-6]
 		coreContent = fmt.Sprintf("%s\t%s : \"%s\",\n", coreContent, name, filePath)
 	}
 
@@ -136,7 +171,32 @@ func isValidPngFile(name string) bool {
 	return name[length-4:] == ".png"
 }
 
+func isValidJpgFile(name string) bool {
+	length := len(name)
+	return name[length-4:] == ".jpg"
+}
+
+func isValidJpegFile(name string) bool {
+	length := len(name)
+	return name[length-5:] == ".jpeg"
+}
+
 func isValidFontFile(name string) bool {
 	length := len(name)
 	return (name[length-4:] == ".ttf")
+}
+
+func isValidMp3File(name string) bool {
+	length := len(name)
+	return (name[length-4:] == ".mp3")
+}
+
+func isValidCafFile(name string) bool {
+	length := len(name)
+	return (name[length-4:] == ".caf")
+}
+
+func isValidPlistFile(name string) bool {
+	length := len(name)
+	return (name[length-6:] == ".plist")
 }

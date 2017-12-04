@@ -54,13 +54,13 @@ func main() {
 
 	// get the order out first
 	jsOrderList := GetStringSliceAtPath(data, "jsListOrder")
-
+	// fmt.Println("order", jsOrderList)
 	for _, otherFilePath := range jsFilePaths {
 		if !ContainsByString(jsOrderList, otherFilePath) {
 			jsOrderList = append(jsOrderList, otherFilePath)
 		}
 	}
-
+	// fmt.Println("afterorder", jsOrderList)
 	data["jsList"] = jsOrderList
 	newProjectJsonFileContent, err := json.MarshalIndent(data, "", "\t")
 	if err != nil {
@@ -136,7 +136,7 @@ for (var i in res) {
 %s
 	`, coreContent, coreFontContent)
 
-	err = ioutil.WriteFile("./src/resource.js", []byte(resFileContent), 0644)
+	err = ioutil.WriteFile("./srces5/resource.js", []byte(resFileContent), 0644)
 	if err != nil {
 		panic(err)
 	}

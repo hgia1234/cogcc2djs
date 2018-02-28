@@ -114,14 +114,15 @@ func main() {
 	for _, filePath := range fontFilePaths {
 		index := strings.LastIndex(filePath, "/")
 		name := filePath[index+1 : len(filePath)-4] // cut .ttf
+		woffName := strings.Replace(filePath, ".ttf", ".woff", -1)
 		coreFontContent = fmt.Sprintf(`
 %s		
 g_resources.push({
     type:"font",
     name:"%s",
-    srcs:["%s"]
+    srcs:["%s", "%s"]
 });
-			`, coreFontContent, name, filePath)
+			`, coreFontContent, name, filePath, woffName)
 	}
 
 	resFileContent := fmt.Sprintf(`
